@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./home.css";
 
 function FadeIn({ children, delay = 0 }) {
@@ -42,10 +42,30 @@ export default function HomePage() {
 }
 
 /* ============ HERO ============ */
+const HERO_IMAGES = ["/HOME1.jpg", "/HOME (2).jpg", "/HOME (3).jpg"];
+
 function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="h-hero">
-      <div className="h-hero__bg-pattern" aria-hidden="true" />
+      <div className="h-hero__slides" aria-hidden="true">
+        {HERO_IMAGES.map((src, i) => (
+          <div
+            key={src}
+            className={`h-hero__slide${i === current ? " is-active" : ""}`}
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
+        <div className="h-hero__overlay" aria-hidden="true" />
+      </div>
       <div className="h-hero__content">
         <FadeIn>
           <p className="h-hero__tag">Innovating Every Day</p>
@@ -76,6 +96,16 @@ function Hero() {
             </Link>
           </div>
         </FadeIn>
+      </div>
+      <div className="h-hero__dots" aria-hidden="true">
+        {HERO_IMAGES.map((_, i) => (
+          <button
+            key={i}
+            className={`h-hero__dot${i === current ? " is-active" : ""}`}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
       </div>
     </section>
   );
