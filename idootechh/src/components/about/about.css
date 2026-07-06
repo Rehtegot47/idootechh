@@ -657,9 +657,7 @@
 .idt-footer {
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(160deg, rgba(8, 5, 22, 0.9) 0%, rgba(24, 10, 63, 0.88) 100%),
-    url('/IdooTechLogo.png') center / cover no-repeat;
+  background: linear-gradient(160deg, rgba(8, 5, 22, 0.9) 0%, rgba(24, 10, 63, 0.88) 100%);
   color: var(--idt-white);
   padding: 5rem 0 2.5rem;
   margin-top: 2rem;
