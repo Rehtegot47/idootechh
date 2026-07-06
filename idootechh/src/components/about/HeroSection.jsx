@@ -42,7 +42,7 @@ export default function HeroSection() {
             <img src="/IdooTech2.png" alt="IdooTech team collaborating" />
             <div className="idt-hero__img-badge">
               <span className="idt-hero__img-badge-dot" />
-              Building the future - together
+              Building the future together
             </div>
           </div>
         </div>

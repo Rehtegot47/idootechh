@@ -340,7 +340,7 @@
 
 .idt-hero__img-badge {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0.75rem;
   left: 1.25rem;
   background: rgba(18, 3, 54, 0.85);
   backdrop-filter: blur(12px);
