@@ -1,0 +1,10 @@
+{
+  "name": "idootechh-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ./idootechh run dev",
+    "build": "npm --prefix ./idootechh run build",
+    "lint": "npm --prefix ./idootechh run lint",
+    "preview": "npm --prefix ./idootechh run preview"
+  }
+}

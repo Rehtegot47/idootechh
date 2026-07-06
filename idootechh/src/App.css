@@ -1,0 +1,58 @@
+.app-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 5%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--idt-gray-border);
+}
+
+.app-nav__logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--idt-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.app-nav__logo span {
+  font-weight: 300;
+  color: var(--idt-accent);
+}
+
+.app-nav__links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.app-nav__links a {
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--idt-text-muted);
+  transition: all 0.2s ease;
+}
+
+.app-nav__links a:hover {
+  color: var(--idt-primary);
+  background: var(--idt-gray-light);
+}
+
+.app-nav__links a.active {
+  color: var(--idt-white);
+  background: var(--idt-primary);
+}
+
+@media (max-width: 768px) {
+  .app-nav {
+    padding: 0.75rem 5%;
+  }
+}
