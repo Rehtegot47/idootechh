@@ -22,6 +22,16 @@ const TEAM = [
     desc: "IT consultancy and advisory work that guides digital transformation and operational efficiency.",
     icon: "compass",
   },
+  {
+    title: "UI/UX Designer",
+    desc: "Creates the user experience and interface of the software and hardware.",
+    icon: "Hero",
+  },
+  {
+    title: "Cyber Security",
+    desc: "Protects the software from cyber threats, and develops secure software and hardware.",
+    icon: "padlock",
+  },
 ];
 
 export default function TeamGrid() {
@@ -51,7 +61,7 @@ export default function TeamGrid() {
           <TeamIcon /> Who We Are
         </p>
         <h2 className="idt-h2 idt-reveal idt-reveal--delay-1">
-          One team, four disciplines.
+          One team, Six disciplines.
         </h2>
         <p className="idt-p idt-reveal idt-reveal--delay-2" style={{ maxWidth: 600, marginBottom: 0 }}>
           IdooTech is built from people who design, teach, and build -
@@ -129,6 +139,23 @@ function Icon({ name }) {
             strokeWidth="2"
             strokeLinejoin="round"
           />
+        </svg>
+      );
+    case "Hero":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
+          <path d="M3 9h18M9 3v18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="15" cy="15" r="3" stroke="currentColor" strokeWidth="2" />
+        </svg>
+      );
+    case "padlock":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2" />
+          <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+          <path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <path d="M12 10v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       );
     default:
