@@ -61,7 +61,7 @@ function Hero() {
           <div
             key={src}
             className={`h-hero__slide${i === current ? " is-active" : ""}`}
-            style={{ backgroundImage: `url(${src})` }}
+            style={{ backgroundImage: `url('${src}')` }}
           />
         ))}
         <div className="h-hero__overlay" aria-hidden="true" />
