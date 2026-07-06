@@ -1,20 +1,45 @@
 /* =====================
-   FADE IN
+   REVEAL ANIMATIONS
    ===================== */
-.h-fade {
+.h-reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
-.h-fade.is-visible {
+
+.h-reveal.is-visible {
   opacity: 1;
   transform: none;
 }
-.h-fade--delay-1 { transition-delay: 0.1s; }
-.h-fade--delay-2 { transition-delay: 0.2s; }
-.h-fade--delay-3 { transition-delay: 0.3s; }
-.h-fade--delay-4 { transition-delay: 0.4s; }
+
+/* Fade up (default) */
+.h-reveal--up {
+  transform: translateY(32px);
+}
+
+/* Fade from left */
+.h-reveal--left {
+  transform: translateX(-40px);
+}
+
+/* Fade from right */
+.h-reveal--right {
+  transform: translateX(40px);
+}
+
+/* Scale in */
+.h-reveal--scale {
+  transform: scale(0.92);
+}
+
+/* Delay classes */
+.h-reveal--delay-1 { transition-delay: 0.08s; }
+.h-reveal--delay-2 { transition-delay: 0.16s; }
+.h-reveal--delay-3 { transition-delay: 0.24s; }
+.h-reveal--delay-4 { transition-delay: 0.32s; }
+.h-reveal--delay-5 { transition-delay: 0.40s; }
+.h-reveal--delay-6 { transition-delay: 0.48s; }
 
 /* =====================
    PAGE BASE
@@ -248,13 +273,16 @@
   padding: 2.5rem 2rem;
   border-radius: 16px;
   border: 1px solid var(--idt-gray-border);
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              border-color 0.4s ease;
+  will-change: transform;
 }
 
 .h-offering:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--idt-shadow-md);
-  border-color: rgba(127, 157, 63, 0.25);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--idt-shadow-lg);
+  border-color: rgba(127, 157, 63, 0.3);
 }
 
 .h-offering__num {
@@ -309,6 +337,14 @@
   background: linear-gradient(135deg, var(--idt-primary-dark) 0%, var(--idt-primary) 100%);
   border-radius: 28px;
   box-shadow: var(--idt-shadow-lg);
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform;
+}
+
+.h-teaser__card:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow: 0 30px 60px rgba(34, 7, 93, 0.25);
 }
 
 .h-teaser__title {
@@ -340,6 +376,26 @@
 .h-cta {
   padding: 6rem 0;
   background: var(--idt-gray-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.h-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(127, 157, 63, 0.03) 0%, transparent 50%);
+  animation: hDrift 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hDrift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(2%, -1%) rotate(1deg); }
+  66% { transform: translate(-1%, 1%) rotate(-1deg); }
 }
 
 .h-cta__inner {
@@ -418,11 +474,27 @@
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.2s ease;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.h-footer__links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--idt-accent);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .h-footer__links a:hover {
   color: var(--idt-primary);
+}
+
+.h-footer__links a:hover::after {
+  width: 100%;
 }
 
 .h-footer__bottom {

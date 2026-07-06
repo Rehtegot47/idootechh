@@ -59,6 +59,27 @@
   to   { opacity: 1; transform: scale(1); }
 }
 
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(1.5%, -0.5%) rotate(0.5deg); }
+  66% { transform: translate(-1%, 0.5%) rotate(-0.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
 /* =====================
    LOADING OVERLAY
    ===================== */
@@ -103,18 +124,27 @@
    ===================== */
 .idt-reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 .idt-reveal.is-visible {
   opacity: 1;
   transform: none;
 }
-.idt-reveal--delay-1 { transition-delay: 0.1s; }
-.idt-reveal--delay-2 { transition-delay: 0.2s; }
-.idt-reveal--delay-3 { transition-delay: 0.3s; }
-.idt-reveal--delay-4 { transition-delay: 0.4s; }
+
+/* Reveal directions */
+.idt-reveal--up    { transform: translateY(32px); }
+.idt-reveal--left  { transform: translateX(-36px); }
+.idt-reveal--right { transform: translateX(36px); }
+.idt-reveal--scale { transform: scale(0.93); }
+
+.idt-reveal--delay-1 { transition-delay: 0.08s; }
+.idt-reveal--delay-2 { transition-delay: 0.16s; }
+.idt-reveal--delay-3 { transition-delay: 0.24s; }
+.idt-reveal--delay-4 { transition-delay: 0.32s; }
+.idt-reveal--delay-5 { transition-delay: 0.40s; }
+.idt-reveal--delay-6 { transition-delay: 0.48s; }
 
 /* =====================
    GLOBAL / UTILITY
@@ -270,6 +300,7 @@
   background: radial-gradient(ellipse, rgba(127, 157, 63, 0.18) 0%, transparent 68%);
   z-index: 2;
   pointer-events: none;
+  animation: drift 16s ease-in-out infinite;
 }
 
 .idt-hero__grid {
@@ -326,6 +357,13 @@
   box-shadow: 0 32px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
   width: 100%;
   max-width: 480px;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.idt-hero__img-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.12);
 }
 
 .idt-hero__img-card img {
@@ -408,6 +446,13 @@
   border: 1px solid var(--idt-gray-border);
   position: sticky;
   top: 2rem;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.idt-callout:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: var(--idt-shadow-lg);
 }
 
 .idt-callout__title {
@@ -466,6 +511,13 @@
   overflow: hidden;
   box-shadow: var(--idt-shadow-lg);
   margin-bottom: 2rem;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.idt-story__img-wrap:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 28px 60px rgba(34, 7, 93, 0.2);
 }
 
 .idt-story__img-wrap img {
@@ -504,6 +556,7 @@
   background-position: center;
   opacity: 0.35;
   z-index: 0;
+  animation: drift 24s ease-in-out infinite;
 }
 
 .idt-stats-section__overlay {
@@ -539,7 +592,7 @@
 }
 
 .idt-stat:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
   box-shadow: var(--idt-shadow-lg);
 }
 
@@ -605,7 +658,7 @@
 }
 
 .idt-team-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.01);
   box-shadow: var(--idt-shadow-lg);
   border-color: rgba(127, 157, 63, 0.3);
 }
@@ -670,6 +723,14 @@
   padding-bottom: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 2rem;
+}
+
+.idt-footer__content > * {
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.idt-footer__content > *:hover {
+  transform: translateY(-3px);
 }
 
 .idt-footer__brand {

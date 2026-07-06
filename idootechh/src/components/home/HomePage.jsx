@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import "./home.css";
 
-function FadeIn({ children, delay = 0 }) {
+function Reveal({ children, delay = 0, type = "up" }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -12,14 +12,17 @@ function FadeIn({ children, delay = 0 }) {
           entry.target.classList.add("is-visible");
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={ref} className={`h-fade${delay ? ` h-fade--delay-${delay}` : ""}`}>
+    <div
+      ref={ref}
+      className={`h-reveal h-reveal--${type}${delay ? ` h-reveal--delay-${delay}` : ""}`}
+    >
       {children}
     </div>
   );
@@ -67,10 +70,10 @@ function Hero() {
         <div className="h-hero__overlay" aria-hidden="true" />
       </div>
       <div className="h-hero__content">
-        <FadeIn>
+        <Reveal>
           <p className="h-hero__tag">Innovating Every Day</p>
-        </FadeIn>
-        <FadeIn delay={1}>
+        </Reveal>
+        <Reveal delay={1}>
           <h1 className="h-hero__title">
             Technology that
             <br />
@@ -78,15 +81,15 @@ function Hero() {
             <br />
             <span className="h-hero__title-accent">scales</span>.
           </h1>
-        </FadeIn>
-        <FadeIn delay={2}>
+        </Reveal>
+        <Reveal delay={2}>
           <p className="h-hero__desc">
             We build intelligent systems, SaaS platforms, and future-ready
             learning programs — turning bold ideas into real solutions for
             businesses, schools, and communities.
           </p>
-        </FadeIn>
-        <FadeIn delay={3}>
+        </Reveal>
+        <Reveal delay={3}>
           <div className="h-hero__actions">
             <a className="h-btn h-btn--primary" href="#offerings">
               What we do
@@ -95,7 +98,7 @@ function Hero() {
               About us
             </Link>
           </div>
-        </FadeIn>
+        </Reveal>
       </div>
       <div className="h-hero__dots" aria-hidden="true">
         {HERO_IMAGES.map((_, i) => (
@@ -142,30 +145,30 @@ function Offerings() {
   return (
     <section className="h-offerings" id="offerings" ref={ref}>
       <div className="h-container">
-        <FadeIn>
+        <Reveal>
           <p className="h-label">What We Do</p>
-        </FadeIn>
-        <FadeIn delay={1}>
+        </Reveal>
+        <Reveal delay={1}>
           <h2 className="h-section-title">
             Six services, three disciplines.
           </h2>
-        </FadeIn>
-        <FadeIn delay={2}>
+        </Reveal>
+        <Reveal delay={2}>
           <p className="h-section-desc">
             From brand strategy to cyber defence, we deliver end-to-end
             capabilities that help organisations thrive in a digital world.
           </p>
-        </FadeIn>
+        </Reveal>
 
         <div className="h-offerings__grid">
           {OFFERINGS.map((o, i) => (
-            <FadeIn key={o.num} delay={(i % 3) + 1}>
+            <Reveal key={o.num} delay={(i % 3) + 1}>
               <div className="h-offering">
                 <span className="h-offering__category">{o.category}</span>
                 <h3 className="h-offering__title">{o.title}</h3>
                 <p className="h-offering__desc">{o.desc}</p>
               </div>
-            </FadeIn>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -196,27 +199,27 @@ function AboutTeaser() {
     <section className="h-teaser" ref={ref}>
       <div className="h-container">
         <div className="h-teaser__card">
-          <FadeIn>
+          <Reveal>
             <p className="h-label h-label--light">Who We Are</p>
-          </FadeIn>
-          <FadeIn delay={1}>
+          </Reveal>
+          <Reveal delay={1}>
             <h2 className="h-teaser__title">
               Built on the belief that technology should empower, not
               complicate.
             </h2>
-          </FadeIn>
-          <FadeIn delay={2}>
+          </Reveal>
+          <Reveal delay={2}>
             <p className="h-teaser__desc">
               IdooTech bridges the gap between innovation and practical
               application. We are a team of engineers, educators, and
               strategists who design, teach, and build — together.
             </p>
-          </FadeIn>
-          <FadeIn delay={3}>
+          </Reveal>
+          <Reveal delay={3}>
             <Link to="/about" className="h-btn h-btn--primary">
               Learn our story
             </Link>
-          </FadeIn>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -229,18 +232,18 @@ function CTA() {
     <section className="h-cta">
       <div className="h-container">
         <div className="h-cta__inner">
-          <FadeIn>
+          <Reveal>
             <h2 className="h-cta__title">
               Let&apos;s build something great together.
             </h2>
-          </FadeIn>
-          <FadeIn delay={1}>
+          </Reveal>
+          <Reveal delay={1}>
             <p className="h-cta__desc">
               Whether you need a platform, a learning program, or a technology
               strategy — reach out and let&apos;s talk.
             </p>
-          </FadeIn>
-          <FadeIn delay={2}>
+          </Reveal>
+          <Reveal delay={2}>
             <div className="h-cta__actions">
               <a className="h-btn h-btn--primary" href="mailto:info@idootech.com.ng">
                 <MailIcon /> Get in touch
@@ -249,7 +252,7 @@ function CTA() {
                 <PhoneIcon /> Call us
               </a>
             </div>
-          </FadeIn>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -261,24 +264,28 @@ function SiteFooter() {
   return (
     <footer className="h-footer">
       <div className="h-container">
-        <div className="h-footer__top">
-          <div>
-            <h3 className="h-footer__logo">
-              Idoo<span>Tech</span>
-            </h3>
-            <p className="h-footer__tagline">
-              Innovating Every Day.
-            </p>
+        <Reveal>
+          <div className="h-footer__top">
+            <div>
+              <h3 className="h-footer__logo">
+                Idoo<span>Tech</span>
+              </h3>
+              <p className="h-footer__tagline">
+                Innovating Every Day.
+              </p>
+            </div>
+            <div className="h-footer__links">
+              <Link to="/">Home</Link>
+              <Link to="/about">About</Link>
+              <a href="mailto:info@idootech.com.ng">Contact</a>
+            </div>
           </div>
-          <div className="h-footer__links">
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <a href="mailto:info@idootech.com.ng">Contact</a>
+        </Reveal>
+        <Reveal delay={1}>
+          <div className="h-footer__bottom">
+            <p>&copy; {new Date().getFullYear()} IdooTech. All rights reserved.</p>
           </div>
-        </div>
-        <div className="h-footer__bottom">
-          <p>&copy; {new Date().getFullYear()} IdooTech. All rights reserved.</p>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );
