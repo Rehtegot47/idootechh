@@ -113,26 +113,12 @@ function Hero() {
 
 /* ============ OFFERINGS ============ */
 const OFFERINGS = [
-  {
-    num: "01",
-    title: "Software & SaaS",
-    desc: "Full-stack web, mobile, and cloud-native platforms tailored to your operations.",
-  },
-  {
-    num: "02",
-    title: "Robotics & AI",
-    desc: "Intelligent systems and applied machine learning that solve real-world problems.",
-  },
-  {
-    num: "03",
-    title: "EduTech & Training",
-    desc: "Future-ready learning through TIM — teaching coding, robotics, AI, and digital skills.",
-  },
-  {
-    num: "04",
-    title: "Consulting & Strategy",
-    desc: "IT advisory and digital transformation guidance to help you scale with confidence.",
-  },
+  { num: "01", category: "Branding", title: "Brand Identity & Strategy", desc: "Crafting unique brand identities, positioning, and messaging that resonate with your audience and set you apart." },
+  { num: "02", category: "Branding", title: "Visual Design & Guidelines", desc: "Comprehensive visual systems including logos, typography, colour palettes, and brand guidelines for consistency." },
+  { num: "03", category: "Designing", title: "UI/UX Design", desc: "User-centred interfaces and seamless experiences across web and mobile platforms, backed by research and testing." },
+  { num: "04", category: "Designing", title: "Graphic & Motion Design", desc: "Engaging visual content, illustrations, and motion graphics that communicate your message with impact." },
+  { num: "05", category: "Cyber Security", title: "Security Audits & Assessments", desc: "Thorough vulnerability assessments, penetration testing, and compliance audits to protect your infrastructure." },
+  { num: "06", category: "Cyber Security", title: "Threat Monitoring & Protection", desc: "Real-time monitoring, incident response, and proactive defence strategies to safeguard your digital assets." },
 ];
 
 function Offerings() {
@@ -161,21 +147,21 @@ function Offerings() {
         </FadeIn>
         <FadeIn delay={1}>
           <h2 className="h-section-title">
-            Four pillars, one purpose.
+            Six services, three disciplines.
           </h2>
         </FadeIn>
         <FadeIn delay={2}>
           <p className="h-section-desc">
-            Every capability we offer is designed to help you move forward —
-            faster, smarter, and with more confidence.
+            From brand strategy to cyber defence, we deliver end-to-end
+            capabilities that help organisations thrive in a digital world.
           </p>
         </FadeIn>
 
         <div className="h-offerings__grid">
           {OFFERINGS.map((o, i) => (
-            <FadeIn key={o.num} delay={(i % 2) + 1}>
+            <FadeIn key={o.num} delay={(i % 3) + 1}>
               <div className="h-offering">
-                <span className="h-offering__num">{o.num}</span>
+                <span className="h-offering__category">{o.category}</span>
                 <h3 className="h-offering__title">{o.title}</h3>
                 <p className="h-offering__desc">{o.desc}</p>
               </div>

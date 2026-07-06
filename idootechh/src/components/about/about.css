@@ -586,92 +586,6 @@
 }
 
 /* =====================
-   SERVICES
-   ===================== */
-.idt-services__group {
-  margin-top: 3.5rem;
-}
-
-.idt-services__group + .idt-services__group {
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--idt-gray-border);
-}
-
-.idt-services__category {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--idt-accent);
-  margin-bottom: 1.5rem;
-}
-
-.idt-services__category svg {
-  flex-shrink: 0;
-}
-
-.idt-services__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-}
-
-.idt-service {
-  background: var(--idt-white);
-  padding: 1.75rem 1.5rem;
-  border-radius: 16px;
-  border: 1px solid var(--idt-gray-border);
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.idt-service:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--idt-shadow-md);
-  border-color: rgba(127, 157, 63, 0.25);
-}
-
-.idt-service__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: var(--idt-gray-light);
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  color: var(--idt-primary);
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.idt-service:hover .idt-service__icon {
-  transform: scale(1.1);
-  background: rgba(34, 7, 93, 0.08);
-}
-
-.idt-service__icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.idt-service__title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--idt-primary);
-  margin-bottom: 0.5rem;
-}
-
-.idt-service__desc {
-  font-size: 0.9rem;
-  color: var(--idt-text-muted);
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* =====================
    TEAM
    ===================== */
 .idt-team__grid {
@@ -876,10 +790,6 @@
 
 @media (max-width: 768px) {
   .idt-section, .idt-stats-section { padding: 4rem 0; }
-
-  .idt-services__grid {
-    grid-template-columns: 1fr;
-  }
 
   .idt-stats__grid,
   .idt-team__grid,

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import HeroSection from "./HeroSection";
 import CompanyHistory from "./CompanyHistory";
 import StatsGrid from "./StatsGrid";
-import ServicesSection from "./ServicesSection";
 import TeamGrid from "./TeamGrid";
 import Footer from "./Footer";
 import "./about.css";
@@ -36,7 +35,6 @@ export default function AboutPage({ logoSrc }) {
         <HeroSection logoSrc={logoSrc} />
         <CompanyHistory />
         <StatsGrid />
-        <ServicesSection />
         <TeamGrid />
         <Footer />
       </main>
