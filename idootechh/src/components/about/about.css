@@ -271,7 +271,7 @@
 .idt-hero__bg {
   position: absolute;
   inset: 0;
-  background-image: url('/HOME (3).jpg');
+  background-image: url('/HOME%20(3).jpg');
   background-size: cover;
   background-position: center;
   z-index: 0;

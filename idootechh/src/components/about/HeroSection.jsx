@@ -4,7 +4,7 @@ export default function HeroSection() {
   return (
     <header className="idt-hero">
       {/* Background image layer */}
-      <div className="idt-HOME(3)" aria-hidden="true" />
+      <div className="idt-hero__bg" aria-hidden="true" />
       {/* Semi-transparent overlay */}
       <div className="idt-hero__overlay" aria-hidden="true" />
       {/* Green accent glow */}
