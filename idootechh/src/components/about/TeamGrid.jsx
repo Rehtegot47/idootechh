@@ -55,7 +55,8 @@ export default function TeamGrid() {
   }, []);
 
   return (
-    <section className="idt-section" id="team" ref={sectionRef}>
+    <section className="idt-section idt-section--team" id="team" ref={sectionRef}>
+      <div className="idt-team__bg" aria-hidden="true" />
       <div className="idt-container">
         <p className="idt-eyebrow idt-reveal">
           <TeamIcon /> Who We Are

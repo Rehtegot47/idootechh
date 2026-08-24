@@ -1,0 +1,51 @@
+/* =====================
+   SCROLL REVEAL ANIMATIONS
+   Shared across all pages
+   ===================== */
+
+/* Base — invisible */
+.h-reveal,
+.idt-reveal,
+.reveal-up {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* Visible */
+.h-reveal.is-visible,
+.idt-reveal.is-visible,
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Direction variants */
+.h-reveal--up,
+.idt-reveal--up {
+  transform: translateY(32px);
+}
+
+.h-reveal--left,
+.idt-reveal--left {
+  transform: translateX(-36px);
+}
+
+.h-reveal--right,
+.idt-reveal--right {
+  transform: translateX(36px);
+}
+
+.h-reveal--scale,
+.idt-reveal--scale {
+  transform: scale(0.93);
+}
+
+/* Delay classes */
+.h-reveal--delay-1, .idt-reveal--delay-1, .reveal--delay-1 { transition-delay: 0.08s; }
+.h-reveal--delay-2, .idt-reveal--delay-2, .reveal--delay-2 { transition-delay: 0.16s; }
+.h-reveal--delay-3, .idt-reveal--delay-3, .reveal--delay-3 { transition-delay: 0.24s; }
+.h-reveal--delay-4, .idt-reveal--delay-4 { transition-delay: 0.32s; }
+.h-reveal--delay-5, .idt-reveal--delay-5 { transition-delay: 0.40s; }
+.h-reveal--delay-6, .idt-reveal--delay-6 { transition-delay: 0.48s; }

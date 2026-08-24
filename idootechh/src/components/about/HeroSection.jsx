@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./about.css";
 
 export default function HeroSection() {
@@ -5,10 +6,7 @@ export default function HeroSection() {
     <header className="idt-hero">
       {/* Background image layer */}
       <div className="idt-hero__bg" aria-hidden="true" />
-      {/* Semi-transparent overlay */}
       <div className="idt-hero__overlay" aria-hidden="true" />
-      {/* Green accent glow */}
-      <div className="idt-hero__glow" aria-hidden="true" />
 
       <div className="idt-hero__grid">
         {/* Left: Text Content */}
@@ -25,14 +23,14 @@ export default function HeroSection() {
           </p>
 
           <div className="idt-hero__actions">
-            <a className="idt-btn idt-btn--primary" href="#services">
+            <Link className="idt-btn idt-btn--primary" to="/services">
               <ServicesIcon />
               Explore our services
-            </a>
-            <a className="idt-btn idt-btn--ghost" href="#contact">
+            </Link>
+            <Link className="idt-btn idt-btn--ghost" to="/contact">
               <ContactIcon />
               Get in touch
-            </a>
+            </Link>
           </div>
         </div>
 

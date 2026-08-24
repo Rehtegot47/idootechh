@@ -1,0 +1,73 @@
+.nf-page {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--idt-text-main);
+  background-color: var(--idt-bg-main);
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.nf-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 5%;
+  animation: nfFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nfFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nf-eyebrow {
+  font-size: 6rem;
+  font-weight: 800;
+  color: var(--idt-accent);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.04em;
+}
+
+.nf-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--idt-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.nf-desc {
+  font-size: 1.1rem;
+  color: var(--idt-text-muted);
+  margin-bottom: 2.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.nf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  background: var(--idt-accent);
+  color: var(--idt-white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.nf-btn:hover {
+  transform: translateY(-3px);
+}

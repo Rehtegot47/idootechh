@@ -27,7 +27,8 @@ export default function CompanyHistory() {
     <section className="idt-section" id="story" ref={sectionRef}>
       <div className="idt-container idt-history__grid">
         {/* Left: Story Text */}
-        <div>
+        <div className="idt-history__text">
+          <div className="idt-history__text-bg" aria-hidden="true" />
           <p className="idt-eyebrow idt-reveal">
             <StoryIcon /> Our Story
           </p>
@@ -66,9 +67,8 @@ export default function CompanyHistory() {
 
         {/* Right: Callout Card */}
         <div className="idt-reveal idt-reveal--delay-2">
-          {/* Collaboration image in callout */}
           <div className="idt-story__img-wrap">
-            <img src="/story-collab.png" alt="IdooTech team at work" />
+            <img src="/idoo1.jpg" alt="IdooTech team at work" />
             <div className="idt-story__img-caption">
               Building solutions that matter - every day.
             </div>
