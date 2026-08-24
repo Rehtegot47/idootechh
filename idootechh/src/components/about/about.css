@@ -173,7 +173,7 @@
 .idt-hero__bg {
   position: absolute;
   inset: 0;
-  background-image: url('/HOME%20(2).jpg');
+  background-image: url('/home-hero.jpg');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -456,7 +456,7 @@
 .idt-stats-section__bg {
   position: absolute;
   inset: 0;
-  background-image: url('/HOME1.jpg');
+  background-image: url('/home-stats.jpg');
   background-size: cover;
   background-position: center;
   opacity: 0.35;
@@ -554,7 +554,7 @@
 .idt-team__bg {
   position: absolute;
   inset: 0;
-  background-image: url('/HOME%20(3).jpg');
+  background-image: url('/home-team.jpg');
   background-size: cover;
   background-position: center;
   opacity: 0.06;
