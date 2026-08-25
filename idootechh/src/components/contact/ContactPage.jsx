@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import SEO from "../SEO";
 import Footer from "../Footer";
+import PageHero from "../PageHero";
 import "./contact.css";
 
 export default function ContactPage() {
@@ -21,26 +22,13 @@ export default function ContactPage() {
 /* ============ HERO ============ */
 function Hero() {
   return (
-    <section className="c-hero">
-      <div className="c-hero__bg" aria-hidden="true" />
-      <div className="c-hero__overlay" aria-hidden="true" />
-      <div className="c-container">
-        <div className="c-hero__grid">
-          <div className="c-hero__visual">
-            <img src="/contact.jpg" alt="IdooTech contact" width="520" height="390" />
-          </div>
-          <div className="c-hero__content">
-            <p className="c-eyebrow reveal-up">Get in Touch</p>
-            <h1 className="c-h1 reveal-up reveal--delay-1">
-              Let&apos;s start a conversation.
-            </h1>
-            <p className="c-hero__desc reveal-up reveal--delay-2">
-              Have a project in mind, a question, or just want to say hello? We&apos;d love to hear from you.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Get in Touch"
+      title="Let's start a conversation."
+      description="Have a project in mind, a question, or just want to say hello? We'd love to hear from you."
+      image={{ src: "/contact.jpg", alt: "Colleagues talking in a modern office, representing IdooTech's team ready to connect" }}
+      imageSide="left"
+    />
   );
 }
 
@@ -69,7 +57,7 @@ function ContactSection() {
     setStatus("sending");
     const data = new FormData(e.target);
     try {
-      const res = await fetch("/.netlify/functions/contact", {
+      const res = await fetch("/api/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

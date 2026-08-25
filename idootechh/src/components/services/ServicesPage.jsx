@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../SEO";
 import Footer from "../Footer";
+import PageHero from "../PageHero";
 import "./services.css";
 
 export default function ServicesPage() {
@@ -24,27 +25,17 @@ export default function ServicesPage() {
 /* ============ HERO ============ */
 function Hero() {
   return (
-    <section className="s-hero">
-      <div className="s-hero__bg" aria-hidden="true" />
-      <div className="s-hero__overlay" aria-hidden="true" />
-      <div className="s-container">
-        <div className="s-hero__grid">
-          <div className="s-hero__content">
-            <p className="s-eyebrow reveal-up">What We Do</p>
-            <h1 className="s-h1 reveal-up reveal--delay-1">
-              Technology that <span className="s-h1-accent">builds, thinks, moves</span>.
-            </h1>
-            <p className="s-hero__desc reveal-up reveal--delay-2">
-              From code to cognition to hardware, we deliver end-to-end
-              technology solutions that drive real-world impact.
-            </p>
-          </div>
-          <div className="s-hero__visual">
-            <img src="/services.jpg" alt="IdooTech services" width="520" height="390" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="What We Do"
+      title={<>Technology that <span className="pg-hero__title-accent">builds, thinks, moves</span>.</>}
+      description="From code to cognition to hardware, we deliver end-to-end technology solutions that drive real-world impact."
+      image={{ src: "/services.jpg", alt: "Abstract visualization of IdooTech's connected software, AI, and automation services" }}
+      badge="Software · AI · Robotics"
+      actions={[
+        { to: "/contact", label: "Start a project", variant: "primary" },
+        { to: "/portfolio", label: "View our work", variant: "ghost" },
+      ]}
+    />
   );
 }
 
@@ -165,7 +156,7 @@ function Categories() {
 const STEPS = [
   { num: "01", title: "Discovery", desc: "We learn about your business, goals, and challenges through in-depth consultation." },
   { num: "02", title: "Strategy", desc: "We craft a tailored roadmap with clear milestones, timelines, and deliverables." },
-  { num: "03", title: "Design & Build", desc: "Our team executes with precision — designing, developing, and testing every detail." },
+  { num: "03", title: "Design & Build", desc: "Our team executes with precision - designing, developing, and testing every detail." },
   { num: "04", title: "Launch & Support", desc: "We deploy, monitor, and provide ongoing support to ensure long-term success." },
 ];
 

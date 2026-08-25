@@ -1,0 +1,264 @@
+/* =====================
+   SHARED PAGE HERO
+   Used by About, Services, Portfolio, FAQ, Contact.
+   Intentionally distinct from the Home page hero (which keeps its
+   own full-bleed swiper) - this is a lighter, static sub-page hero.
+   ===================== */
+.pg-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 8.5rem 5% 5.5rem;
+  background: linear-gradient(180deg, var(--idt-bg-tint) 0%, var(--idt-bg-main) 100%);
+}
+
+.pg-hero__decor {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pg-hero__decor--a {
+  width: 420px;
+  height: 420px;
+  top: -140px;
+  right: -80px;
+  background: radial-gradient(circle, var(--idt-accent-glow) 0%, transparent 70%);
+}
+
+.pg-hero__decor--b {
+  width: 360px;
+  height: 360px;
+  bottom: -160px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(34, 7, 93, 0.14) 0%, transparent 70%);
+}
+
+.pg-hero__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.pg-hero--left .pg-hero__container {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+.pg-hero--left .pg-hero__content {
+  order: 2;
+}
+.pg-hero--left .pg-hero__visual {
+  order: 1;
+}
+
+.pg-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--idt-accent);
+  background: rgba(127, 157, 63, 0.1);
+  border: 1px solid rgba(127, 157, 63, 0.25);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  margin: 0 0 1.25rem;
+  animation: pgFadeUp 0.6s ease both;
+}
+
+.pg-hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--idt-accent);
+  flex-shrink: 0;
+}
+
+.pg-hero__title {
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--idt-primary);
+  margin: 0 0 1.25rem;
+  animation: pgFadeUp 0.6s ease 0.08s both;
+}
+
+.pg-hero__title-accent {
+  color: var(--idt-accent);
+}
+
+.pg-hero__desc {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--idt-text-muted);
+  max-width: 520px;
+  margin: 0 0 2rem;
+  animation: pgFadeUp 0.6s ease 0.16s both;
+}
+
+.pg-hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: pgFadeUp 0.6s ease 0.24s both;
+}
+
+.pg-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, color 0.3s, border-color 0.3s;
+  letter-spacing: 0.01em;
+}
+
+.pg-hero__btn--primary {
+  background: var(--idt-accent);
+  color: var(--idt-white);
+}
+.pg-hero__btn--primary:hover {
+  transform: translateY(-3px);
+}
+
+.pg-hero__btn--ghost {
+  background: transparent;
+  color: var(--idt-primary);
+  border: 2px solid var(--idt-gray-border);
+}
+.pg-hero__btn--ghost:hover {
+  border-color: var(--idt-primary);
+  transform: translateY(-3px);
+}
+
+.pg-hero__visual {
+  position: relative;
+  padding-bottom: 1.75rem;
+  animation: pgFadeIn 0.8s ease 0.2s both;
+}
+
+.pg-hero__card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--idt-shadow-lg);
+  border: 1px solid var(--idt-gray-border);
+}
+
+.pg-hero__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pg-hero__badge {
+  position: absolute;
+  bottom: 0;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--idt-white);
+  border-radius: 14px;
+  padding: 0.75rem 1.1rem;
+  box-shadow: var(--idt-shadow-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--idt-text-main);
+}
+
+.pg-hero__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--idt-accent);
+  box-shadow: 0 0 0 4px var(--idt-accent-glow);
+  flex-shrink: 0;
+}
+
+@keyframes pgFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pgFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .pg-hero {
+    padding: 7rem 6% 4rem;
+  }
+
+  .pg-hero__container,
+  .pg-hero--left .pg-hero__container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .pg-hero--left .pg-hero__content,
+  .pg-hero--left .pg-hero__visual {
+    order: initial;
+  }
+
+  .pg-hero__card {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .pg-hero__badge {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .pg-hero__desc {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .pg-hero__actions {
+    flex-direction: column;
+  }
+
+  .pg-hero__btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-hero__eyebrow,
+  .pg-hero__title,
+  .pg-hero__desc,
+  .pg-hero__actions,
+  .pg-hero__visual {
+    animation: none;
+  }
+}

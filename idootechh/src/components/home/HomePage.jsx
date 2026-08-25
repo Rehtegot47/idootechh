@@ -84,7 +84,7 @@ const SLIDES = [
         <span className="h-hero__title-accent">for</span> you.
       </>
     ),
-    desc: "We embed machine learning, LLMs, and computer vision into your workflows — turning raw data into decisions and automating what slows you down.",
+    desc: "We embed machine learning, LLMs, and computer vision into your workflows - turning raw data into decisions and automating what slows you down.",
     img: "/idoo2.jpg",
     imgSide: "left",
     cta: [
@@ -421,7 +421,7 @@ const PROJECTS = [
     img: "/idoo1.jpg",
   },
   {
-    title: "TIM — EduTech Program",
+    title: "TIM - EduTech Program",
     tag: "Education",
     desc: "Our flagship program teaching coding, robotics, AI, and digital graphics to students, equipping them with in-demand skills for the future.",
     img: "/idoo2.jpg",
@@ -586,7 +586,7 @@ function CTA() {
           <Reveal delay={1}>
             <p className="h-cta__desc">
               Whether you need a platform, a learning program, or a technology
-              strategy — reach out and let&apos;s talk.
+              strategy - reach out and let&apos;s talk.
             </p>
           </Reveal>
           <Reveal delay={2}>

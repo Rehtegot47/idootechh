@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../SEO";
 import Footer from "../Footer";
+import PageHero from "../PageHero";
 import "./faq.css";
 
 export default function FAQPage() {
@@ -23,26 +24,17 @@ export default function FAQPage() {
 /* ============ HERO ============ */
 function Hero() {
   return (
-    <section className="f-hero">
-      <div className="f-hero__bg" aria-hidden="true" />
-      <div className="f-hero__overlay" aria-hidden="true" />
-      <div className="f-container">
-        <div className="f-hero__grid">
-          <div className="f-hero__content">
-            <p className="f-eyebrow reveal-up">FAQ</p>
-            <h1 className="f-h1 reveal-up reveal--delay-1">
-              Frequently asked <span className="f-h1-accent">questions</span>.
-            </h1>
-            <p className="f-hero__desc reveal-up reveal--delay-2">
-              Everything you need to know about working with IdooTech.
-            </p>
-          </div>
-          <div className="f-hero__visual">
-            <img src="/FAQ.jpg" alt="IdooTech FAQ" width="520" height="390" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="FAQ"
+      title={<>Frequently asked <span className="pg-hero__title-accent">questions</span>.</>}
+      description="Everything you need to know about working with IdooTech."
+      image={{ src: "/FAQ.jpg", alt: "Hand tapping a tablet surrounded by icons representing common questions" }}
+      badge="Answers before you ask"
+      actions={[
+        { to: "/contact", label: "Still have questions?", variant: "primary" },
+        { to: "/services", label: "View services", variant: "ghost" },
+      ]}
+    />
   );
 }
 
@@ -66,10 +58,10 @@ const FAQS = [
   },
   {
     q: "What industries do you work with?",
-    a: "We've served over 10 industries including logistics, real estate, education, NGOs, and more. Our solutions are adaptable — we take time to understand your specific industry challenges before designing a solution.",
+    a: "We've served over 10 industries including logistics, real estate, education, NGOs, and more. Our solutions are adaptable - we take time to understand your specific industry challenges before designing a solution.",
   },
   {
-    q: "What is TIM — your EduTech program?",
+    q: "What is TIM - your EduTech program?",
     a: "TIM (Technology, Innovation & Me) is our flagship education program that teaches coding, robotics, AI, and digital graphics to students aged 8-18. It's designed to equip the next generation with in-demand technology skills.",
   },
   {

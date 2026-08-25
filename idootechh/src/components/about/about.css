@@ -157,136 +157,6 @@
 }
 
 /* =====================
-   HERO SECTION
-   ===================== */
-.idt-hero {
-  position: relative;
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  color: var(--idt-white);
-  padding: 6rem 5% 5rem;
-  overflow: hidden;
-}
-
-/* Background image layer */
-.idt-hero__bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('/home-hero.jpg');
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
-
-.idt-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  z-index: 1;
-}
-
-.idt-hero__grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 5rem;
-  align-items: center;
-  position: relative;
-  z-index: 3;
-}
-
-.idt-hero__content .idt-eyebrow {
-  color: var(--idt-accent-light);
-  border-color: rgba(127, 157, 63, 0.35);
-  background: rgba(127, 157, 63, 0.12);
-  animation: fadeUp 0.7s ease both;
-}
-
-.idt-hero__content .idt-h1 {
-  animation: fadeUp 0.7s ease 0.12s both;
-}
-
-.idt-lede {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  opacity: 0.88;
-  margin-bottom: 2.5rem;
-  max-width: 560px;
-  animation: fadeUp 0.7s ease 0.24s both;
-}
-
-.idt-hero__actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  animation: fadeUp 0.7s ease 0.36s both;
-}
-
-/* Hero visual side */
-.idt-hero__visual {
-  animation: float 6s ease-in-out infinite, fadeIn 1s ease 0.4s both;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.idt-hero__img-card {
-  position: relative;
-  margin-top: -2rem;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 32px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
-  width: 100%;
-  max-width: 480px;
-  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1),
-              box-shadow 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.idt-hero__img-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.12);
-}
-
-.idt-hero__img-card img {
-  display: block;
-  width: 100%;
-  height: 340px;
-  object-fit: contain;
-  background: rgba(90, 90, 100, 0.55);
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-.idt-hero__img-badge {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 1.25rem;
-  background: rgba(90, 90, 100, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 14px;
-  padding: 0.75rem 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: var(--idt-white);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.idt-hero__img-badge-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--idt-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(127,157,63,0.3);
-  animation: float 2s ease-in-out infinite;
-}
-
-/* =====================
    HISTORY / STORY
    ===================== */
 .idt-history__grid {
@@ -634,25 +504,12 @@
    RESPONSIVE
    ===================== */
 @media (max-width: 992px) {
-  .idt-hero__grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: left;
-  }
-
-  .idt-hero__visual { display: none; }
-
   .idt-history__grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
 
   .idt-callout { position: relative; top: 0; }
-
-  .idt-hero {
-    padding-top: 5rem;
-    min-height: 80vh;
-  }
 }
 
 @media (max-width: 768px) {
@@ -664,7 +521,6 @@
     gap: 1.5rem;
   }
 
-  .idt-hero__actions { flex-direction: column; }
   .idt-h1 { font-size: 2.6rem; }
   .idt-h2 { font-size: 2rem; }
 }

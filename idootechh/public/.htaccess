@@ -1,0 +1,12 @@
+# SPA fallback for React Router — serve index.html for any path that
+# isn't a real file or directory (client-side routes: /about, /services,
+# /portfolio, /faq, /contact). Does not affect /jakapams/, /hansi-web-project/,
+# /netlify/, or any other real file/directory on this docroot.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
