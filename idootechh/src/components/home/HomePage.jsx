@@ -117,6 +117,11 @@ function Hero() {
 
   return (
     <section className="h-hero">
+      <div className="h-hero__blobs" aria-hidden="true">
+        <span className="h-hero__blob h-hero__blob--1" />
+        <span className="h-hero__blob h-hero__blob--2" />
+        <span className="h-hero__blob h-hero__blob--3" />
+      </div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         onBeforeInit={(swiper) => {
@@ -245,8 +250,8 @@ const SERVICE_CATEGORIES = [
       </svg>
     ),
     title: "Software Development",
-    desc: "Custom web and mobile applications, SaaS platforms, and scalable backend systems built with modern architectures.",
-    services: ["Web & Mobile Apps", "SaaS & API Development"],
+    desc: "Full-cycle development across web, mobile, desktop, and embedded systems, built with modern architectures and best practices.",
+    services: ["Web, Mobile & Desktop Apps", "APIs & Backend Systems"],
   },
   {
     icon: (
@@ -255,8 +260,8 @@ const SERVICE_CATEGORIES = [
         <circle cx="12" cy="10" r="3" />
       </svg>
     ),
-    title: "Integrated AI",
-    desc: "Intelligent automation, machine learning models, and AI-powered features embedded into your existing workflows.",
+    title: "Machine Learning & AI",
+    desc: "Applied AI that turns raw data into decisions, machine learning models, LLMs, and computer vision embedded into your workflows.",
     services: ["AI/ML Integration", "LLM & Computer Vision"],
   },
   {
@@ -266,9 +271,42 @@ const SERVICE_CATEGORIES = [
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
       </svg>
     ),
-    title: "Robotics",
-    desc: "Educational robotics programs, automation systems, and embedded solutions that bridge hardware with software.",
+    title: "Robotics & Intelligent Systems",
+    desc: "Design and deployment of functional smart systems, from educational robotics kits to industrial automation.",
     services: ["Robotics Education", "Automation & Embedded Systems"],
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17.5 19H9a5 5 0 1 1 1.14-9.86A5.5 5.5 0 1 1 17.5 19z" />
+      </svg>
+    ),
+    title: "SaaS Platforms",
+    desc: "Multi-tenant SaaS products for schools, hotels, and enterprises, built to scale from day one.",
+    services: ["School & Hotel Management", "Enterprise Solutions"],
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+    title: "IT Consultancy",
+    desc: "Advisory services that help organisations navigate digital transformation and sharpen operational efficiency.",
+    services: ["Digital Transformation Strategy", "Technology Advisory"],
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10L12 5 2 10l10 5 10-5z" />
+        <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
+      </svg>
+    ),
+    title: "EduTech Programs",
+    desc: "Future-focused tech education, coding, AI, robotics, and digital graphics, delivered through TIM, our flagship learning program.",
+    services: ["Coding & AI Bootcamps", "Robotics & Digital Graphics Training"],
   },
 ];
 
@@ -298,13 +336,14 @@ function Services() {
         </Reveal>
         <Reveal delay={1}>
           <h2 className="h-section-title">
-            Three core pillars, infinite possibilities.
+            Six ways we turn ideas into impact.
           </h2>
         </Reveal>
         <Reveal delay={2}>
           <p className="h-section-desc">
-            From code to cognition to hardware, we deliver end-to-end
-            technology solutions that drive real-world impact.
+            From software and AI to robotics, SaaS platforms, consultancy,
+            and hands-on tech education, we deliver end-to-end solutions
+            that create lasting impact.
           </p>
         </Reveal>
         <div className="h-services__grid">
@@ -415,22 +454,22 @@ function About() {
 /* ============ PORTFOLIO ============ */
 const PROJECTS = [
   {
-    title: "EduManage",
-    tag: "SaaS",
-    desc: "A comprehensive school management system that streamlines admissions, attendance, grading, fee management, and parent-teacher communication.",
-    img: "/idoo1.jpg",
+    title: "QuickBooking",
+    tag: "Travel & Hospitality",
+    desc: "A nationwide hotel, apartment, and event-venue booking platform with live availability, an admin dashboard, and an AI trip concierge.",
+    img: "/portfolio-shots/quickbooking.jpg",
   },
   {
-    title: "TIM - EduTech Program",
-    tag: "Education",
-    desc: "Our flagship program teaching coding, robotics, AI, and digital graphics to students, equipping them with in-demand skills for the future.",
-    img: "/idoo2.jpg",
+    title: "AdireByIfe",
+    tag: "E-commerce · Client",
+    desc: "A full e-commerce platform for a Nigerian Adire-textile fashion house - product catalog, custom & bulk orders, and WhatsApp-based ordering.",
+    img: "/portfolio-shots/adirebyife.jpg",
   },
   {
-    title: "Client Web Portal",
-    tag: "Web App",
-    desc: "A white-label client portal that enables businesses to manage projects, share files, communicate with clients, and track deliverables.",
-    img: "/idoo3.jpg",
+    title: "EaziSchool CBT",
+    tag: "EdTech SaaS",
+    desc: "A multi-tenant computer-based testing system for schools, where each school gets its own isolated database and subdomain.",
+    img: "/portfolio-shots/eazischoolcbt.jpg",
   },
 ];
 
