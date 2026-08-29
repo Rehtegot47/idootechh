@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 import SEO from "../SEO";
 import Footer from "../Footer";
 import "./home.css";
@@ -87,6 +88,7 @@ const SLIDES = [
     desc: "We embed machine learning, LLMs, and computer vision into your workflows - turning raw data into decisions and automating what slows you down.",
     img: "/idoo2.jpg",
     imgSide: "left",
+    badge: { num: "6", text: "Core Tech Pillars" },
     cta: [
       { label: "Explore AI", href: "/services#ai", primary: true },
       { label: "Learn more", to: "/services", primary: false },
@@ -104,6 +106,7 @@ const SLIDES = [
     desc: "From educational kits to industrial automation, we design robotic systems that teach, build, and solve real-world problems across industries.",
     img: "/idoo3.jpg",
     imgSide: "right",
+    badge: { num: "4,000+", text: "Students Trained" },
     cta: [
       { label: "Explore Robotics", href: "/services#robotics", primary: true },
       { label: "Our process", to: "/services", primary: false },
@@ -117,19 +120,34 @@ function Hero() {
 
   return (
     <section className="h-hero">
-      <div className="h-hero__blobs" aria-hidden="true">
-        <span className="h-hero__blob h-hero__blob--1" />
-        <span className="h-hero__blob h-hero__blob--2" />
-        <span className="h-hero__blob h-hero__blob--3" />
+      <div className="h-hero__icons" aria-hidden="true">
+        <span className="h-hero__float-icon h-hero__float-icon--1 h-hero__float-icon--accent">
+          <CodeIcon />
+        </span>
+        <span className="h-hero__float-icon h-hero__float-icon--2 h-hero__float-icon--primary">
+          <GearIcon />
+        </span>
+        <span className="h-hero__float-icon h-hero__float-icon--3 h-hero__float-icon--primary">
+          <CloudIcon />
+        </span>
+        <span className="h-hero__float-icon h-hero__float-icon--4 h-hero__float-icon--accent">
+          <GradCapIcon />
+        </span>
+        <span className="h-hero__float-icon h-hero__float-icon--5 h-hero__float-icon--accent">
+          <TargetIcon />
+        </span>
       </div>
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Navigation, Pagination, Autoplay, EffectFade]}
         onBeforeInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;
         }}
         pagination={{ clickable: true }}
         autoplay={{ delay: 6000, disableOnInteraction: false }}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
+        speed={700}
         loop
         className="h-hero__swiper"
       >
@@ -138,7 +156,14 @@ function Hero() {
             <div className={`h-hero__slide h-hero__slide--${slide.imgSide}`}>
               {slide.imgSide === "left" && (
                 <div className="h-hero__visual">
+                  <span className="h-hero__visual-glow" />
                   <img src={slide.img} alt={`IdooTech slide ${i + 1}`} />
+                  {slide.badge && (
+                    <div className="h-hero__visual-badge">
+                      <span className="h-hero__visual-badge-num">{slide.badge.num}</span>
+                      <span className="h-hero__visual-badge-text">{slide.badge.text}</span>
+                    </div>
+                  )}
                 </div>
               )}
               <div className="h-hero__text">
@@ -169,6 +194,7 @@ function Hero() {
               </div>
               {slide.imgSide === "right" && (
                 <div className="h-hero__visual">
+                  <span className="h-hero__visual-glow" />
                   <img src={slide.img} alt={`IdooTech slide ${i + 1}`} />
                   {slide.badge && (
                     <div className="h-hero__visual-badge">
@@ -196,11 +222,56 @@ function Hero() {
   );
 }
 
+function CodeIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  );
+}
+
+function GearIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+    </svg>
+  );
+}
+
+function CloudIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.5 19H9a5 5 0 1 1 1.14-9.86A5.5 5.5 0 1 1 17.5 19z" />
+    </svg>
+  );
+}
+
+function GradCapIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 10L12 5 2 10l10 5 10-5z" />
+      <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
+    </svg>
+  );
+}
+
+function TargetIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 /* ============ STATS BAR ============ */
 const STATS = [
   { num: "10,000+", label: "Users Reached" },
   { num: "10+", label: "Industries Served" },
-  { num: "3", label: "Platforms Built" },
+  { num: "10+", label: "Platforms Built" },
   { num: "50+", label: "Projects Delivered" },
 ];
 

@@ -23,6 +23,7 @@ export default function Footer() {
               <Link to="/about">About</Link>
               <Link to="/services">Services</Link>
               <Link to="/portfolio">Portfolio</Link>
+              <Link to="/tim-program">TIM Program</Link>
               <Link to="/faq">FAQ</Link>
               <Link to="/contact">Contact</Link>
             </div>

@@ -19,7 +19,7 @@ updates files, never removes anything from the server.
 | Web server | CyberPanel / **OpenLiteSpeed** — serves files from disk, no proxy; PHP via `lsapi:idoot5882` (`lsphp82`) is already configured for this vhost |
 | Site system user | `idoot5882:idoot5882` |
 | Doc root | `/home/idootech.com.ng/public_html` |
-| App routes (client-side) | `/`, `/about`, `/services`, `/portfolio`, `/faq`, `/contact` — a `public/` folder must never share a name with one of these (breaks the SPA rewrite, see §2) |
+| App routes (client-side) | `/`, `/about`, `/services`, `/portfolio`, `/tim-program`, `/faq`, `/contact` — a `public/` folder must never share a name with one of these (breaks the SPA rewrite, see §2) |
 
 > **Do not touch:** `index.html.maintenance-backup` (original maintenance
 > page, see §4), `jakapams/` (a live client portal, has its own PHP
