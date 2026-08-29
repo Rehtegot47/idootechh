@@ -460,10 +460,10 @@ const PROJECTS = [
     img: "/portfolio-shots/quickbooking.jpg",
   },
   {
-    title: "AdireByIfe",
-    tag: "E-commerce · Client",
-    desc: "A full e-commerce platform for a Nigerian Adire-textile fashion house - product catalog, custom & bulk orders, and WhatsApp-based ordering.",
-    img: "/portfolio-shots/adirebyife.jpg",
+    title: "Accelerator Hive",
+    tag: "Real Estate",
+    desc: "A real-estate development platform with property listings, a realtor portal, and relocation services for clients across Nigeria.",
+    img: "/portfolio-shots/acceleratorhive.jpg",
   },
   {
     title: "EaziSchool CBT",
