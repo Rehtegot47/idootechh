@@ -6,12 +6,11 @@ const router = Router();
 
 // Login
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const ADMIN_USER = process.env.ADMIN_USER || 'admin';
-  const ADMIN_PASS = process.env.ADMIN_PASS || '';
-  if (!ADMIN_PASS) return res.status(500).json({ error: 'ADMIN_PASS not set' });
-  if (username !== ADMIN_USER || password !== ADMIN_PASS) return res.status(401).json({ error: 'Invalid credentials' });
-  const token = signToken({ username });
+  const { email, password } = req.body;
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'info@idootech.com.ng';
+  const ADMIN_PASS = process.env.ADMIN_PASS || 'info@idootech132';
+  if (email !== ADMIN_EMAIL || password !== ADMIN_PASS) return res.status(401).json({ error: 'Invalid credentials' });
+  const token = signToken({ email });
   res.json({ token });
 });
 

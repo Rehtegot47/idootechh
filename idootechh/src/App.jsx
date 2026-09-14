@@ -67,6 +67,12 @@ function Navbar() {
         <Link to="/store" className={path.startsWith("/store") ? "active" : ""}>Store</Link>
         <Link to="/faq" className={path === "/faq" ? "active" : ""}>FAQ</Link>
         <Link to="/contact" className={path === "/contact" ? "active" : ""}>Contact</Link>
+        <Link to="/admin" className="app-nav__admin-link" aria-label="Admin">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </Link>
       </div>
     </nav>
   );

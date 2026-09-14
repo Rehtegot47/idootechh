@@ -6,7 +6,7 @@ import './admin.css';
 
 
 function Login({ onLogin }){
-  const [form,setForm]=useState({username:'',password:''});
+  const [form,setForm]=useState({email:'',password:''});
   const [err,setErr]=useState('');
   const submit=async(e)=>{
     e.preventDefault();
@@ -23,7 +23,7 @@ function Login({ onLogin }){
     <div className="ad-page"><div className="ad-container" style={{maxWidth:400}}>
       <h1 style={{color:'var(--idt-primary)'}}>Admin Login</h1>
       <form onSubmit={submit} style={{display:'flex',flexDirection:'column',gap:'1rem',marginTop:'1rem'}}>
-        <input className="ad-input" placeholder="Username" value={form.username} onChange={e=>setForm({...form,username:e.target.value})} required/>
+        <input className="ad-input" type="email" placeholder="Email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} required/>
         <input className="ad-input" type="password" placeholder="Password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} required/>
         {err && <p style={{color:'#d32f2f'}}>{err}</p>}
         <button className="ad-btn">Login</button>
