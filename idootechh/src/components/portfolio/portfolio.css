@@ -173,6 +173,11 @@
   color: #ffffff;
 }
 
+.p-card__poster--roboticslab {
+  background: linear-gradient(135deg, var(--idt-accent) 0%, var(--idt-primary-dark) 100%);
+  color: #ffffff;
+}
+
 .p-card__poster--lodgepoint {
   background: linear-gradient(135deg, #b45309 0%, var(--idt-primary) 100%);
   color: #ffffff;

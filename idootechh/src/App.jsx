@@ -10,6 +10,7 @@ const AboutPage = lazy(() => import("./components/about/AboutPage"));
 const ContactPage = lazy(() => import("./components/contact/ContactPage"));
 const ServicesPage = lazy(() => import("./components/services/ServicesPage"));
 const PortfolioPage = lazy(() => import("./components/portfolio/PortfolioPage"));
+const TimProgramPage = lazy(() => import("./components/tim/TimProgramPage"));
 const FAQPage = lazy(() => import("./components/faq/FAQPage"));
 const NotFoundPage = lazy(() => import("./components/notfound/NotFoundPage"));
 const StorePage = lazy(() => import("./components/store/StorePage"));
@@ -88,6 +89,7 @@ function AppLayout() {
           <Route path="/store/product/:slug" element={<ProductPage />} />
           <Route path="/store/cart" element={<CartPage />} />
           <Route path="/store/checkout" element={<CheckoutPage />} />
+          <Route path="/tim-program" element={<TimProgramPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin/*" element={<AdminPage />} />

@@ -124,6 +124,12 @@ const PROJECTS = [
     poster: { variant: "arduino", icon: "robotics" },
   },
   {
+    title: "Robotics & IoT Prototyping Lab",
+    tag: "Robotics · IoT",
+    desc: "A growing lab of hands-on robotics and embedded builds - a robotic arm, Wi-Fi & Bluetooth-controlled rovers, a talking robot assistant, smart-home and traffic-light automation, and assistive tech like obstacle-sensing goggles for the visually impaired.",
+    poster: { variant: "roboticslab", icon: "robotics" },
+  },
+  {
     title: "LodgePoint",
     tag: "In Development",
     desc: "A hotel-booking platform being built - listings, pricing plans, and a full booking flow.",
