@@ -27,7 +27,7 @@ export default function StorePage(){
   return (
     <main className="st-page">
       <SEO title="Store" description="Shop robotic kits, safety wear, software, laptops and more from IdooTech." path="/store"/>
-      <PageHero eyebrow="Store" title="Everything you need to build." description="Robotic kits, safety wear, laptops, software and more — curated by IdooTech." image={{src:'/store-hero.jpg', alt:'IdooTech store'}} imageSide="right"/>
+      <PageHero eyebrow="Store" title="Everything you need to build." description="Robotic kits, safety wear, laptops, software and more — curated by IdooTech." image={{src:'/store.png', alt:'IdooTech store'}} imageSide="right"/>
       <section className="st-hero">
         <div className="st-container">
           <input placeholder="Search products..." value={search} onChange={e=>setSearch(e.target.value)} style={{padding:'0.75rem 1rem',borderRadius:999,border:'1px solid var(--idt-gray-border)',width:'100%',maxWidth:400,marginBottom:'1rem'}}/>
