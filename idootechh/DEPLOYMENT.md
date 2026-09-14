@@ -95,31 +95,124 @@ server. **Bring the live site back:** redeploy (§2) — it overwrites
 
 ---
 
-## 5. Contact form backend (PHP)
+## 5. Node.js backend (API server)
 
-`ContactPage.jsx` posts to `/api/contact.php` (`public/api/contact.php`,
-included in every build). It validates input, sends mail via PHP's
-`mail()` (server's `sendmail` is already configured), and reads the
-recipient/from address from `public_html/api/config.php` — **gitignored,
-created once directly on the server**, never deployed by rsync:
+The PHP contact backend has been replaced with a Node.js/Express server.
+It handles contact form submissions, product catalog, orders, and admin
+operations via MySQL.
+
+### 5.1 Server setup (one-time)
 
 ```bash
-ssh root@207.180.250.238 "cat > /home/idootech.com.ng/public_html/api/config.php" << 'PHPEOF'
-<?php
-return [
-    'recipient' => 'oluwadamilareidowujoshua@gmail.com',
-    'from_address' => 'no-reply@idootech.com.ng',
-];
-PHPEOF
+ssh root@207.180.250.238
+
+# Install Node.js 20.x if not present
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs
+
+# Create backend directory
+mkdir -p /home/idootech.com.ng/server
+cd /home/idootech.com.ng/server
+
+# Copy server files from local (or rsync)
+rsync -avz server/ root@207.180.250.238:/home/idootech.com.ng/server/
+
+# Install dependencies
+cd /home/idootech.com.ng/server
+npm install
+
+# Create .env from template
+cp .env.example .env
+# Edit .env with real credentials (DB password, Gmail app password)
+nano .env
 ```
-Template: `public/api/config.example.php`. Test after any redeploy:
+
+### 5.2 MySQL database setup
+
 ```bash
-/usr/bin/curl -s -X POST https://idootech.com.ng/api/contact.php \
+ssh root@207.180.250.238
+
+# Create database and user
+mysql -u root -p
+```
+
+```sql
+CREATE DATABASE idootech;
+CREATE USER 'idootech'@'localhost' IDENTIFIED BY '<your-password>';
+GRANT ALL PRIVILEGES ON idootech.* TO 'idootech'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+```bash
+# Import schema
+mysql -u idooptech -p idootech < /home/idootech.com.ng/server/schema.sql
+```
+
+### 5.3 Start with PM2
+
+```bash
+cd /home/idootech.com.ng/server
+pm2 start app.js --name idootech-api
+pm2 save
+pm2 startup   # follow the printed command to enable on boot
+```
+
+### 5.4 OpenLiteSpeed reverse proxy
+
+The API must be proxied through OpenLiteSpeed so `https://idootech.com.ng/api/*`
+reaches the Node.js server on port `3001`.
+
+In CyberPanel → Manage VHosts → Rewrite Rules, or edit the vhost config directly:
+
+```
+# Proxy /api/* to Node.js backend
+rewrite  {
+    enable                  1
+    rules                   {
+        regex               ^/api/(.*)$
+        substitution        http://127.0.0.1:3001/api/$1
+        flags               [OR,L]
+    }
+}
+```
+
+Or via OpenLiteSpeed admin console → Virtual Hosts → idootech.com.ng →
+Rewrite → Add Rewrite Rule:
+
+| Field | Value |
+|-------|-------|
+| Pattern | `^/api/(.*)$` |
+| Substitution | `http://127.0.0.1:3001/api/$1` |
+| Flags | `OR,L` |
+
+After saving, restart OpenLiteSpeed:
+```bash
+systemctl restart lsws
+```
+
+### 5.5 Test
+
+```bash
+# Contact form
+/usr/bin/curl -s -X POST https://idootech.com.ng/api/contact \
   -H "Content-Type: application/json" \
-  -d '{"name":"Test","email":"a@b.com","subject":"s","message":"m"}'   # expect {"ok":true}
+  -d '{"name":"Test","email":"a@b.com","subject":"s","message":"m"}'
+
+# Products
+/usr/bin/curl -s https://idootech.com.ng/api/products
 ```
-`netlify/functions/contact.js` (Supabase + Nodemailer) is unused on this
-deploy — kept only in case a future Netlify deploy needs it back.
+
+### 5.6 Redeploying the backend
+
+```bash
+rsync -avz server/ root@207.180.250.238:/home/idootech.com.ng/server/
+ssh root@207.180.250.238 "
+  cd /home/idootech.com.ng/server
+  npm install --production
+  pm2 restart idootech-api
+"
+```
 
 ---
 
@@ -134,6 +227,9 @@ deploy — kept only in case a future Netlify deploy needs it back.
 | Files wrong owner after sync | Re-run §2's `chown -R idoot5882:idoot5882`. |
 | A locally-removed file is still live | Expected (no `--delete`) — remove it by hand over SSH. |
 | Contact form 500/not sending | Check `api/config.php` exists on the server and `php -l` passes on `api/contact.php`. |
+| API 500 /api/contact not working | Check PM2 status: `pm2 status`, `pm2 logs idootech-api`. Verify `.env` has correct DB credentials and Gmail app password. |
+| Node.js backend not starting | Check port 3001 is free: `lsof -i :3001`. Check Node version: `node -v` (must be 20.x). |
+| OpenLiteSpeed 502 Bad Gateway | Node.js server is down — restart with `pm2 restart idootech-api`. Check rewrite rules are correct. |
 
 ---
 
@@ -145,4 +241,5 @@ site is up" (curl across `/`, a client route, `/jakapams/`), "Roll back
 idootech to the last commit" (§3), "Put the maintenance page back up /
 bring the live site back" (§4). It will not touch `jakapams/` or other
 pre-existing doc-root content, add `--delete` without asking, or skip the
-build/dry-run/ownership/verify steps.
+build/dry-run/ownership/verify steps. The Node.js backend (§5) requires
+manual SSH — ask Claude to "deploy the backend" for rsync + PM2 restart.
