@@ -1,0 +1,11 @@
+.ad-page{width:100%;max-width:100vw;overflow-x:hidden;font-family:Inter,system-ui,sans-serif;padding:7rem 5% 4rem;background:var(--idt-bg-main);min-height:100vh;box-sizing:border-box}
+.ad-container{max-width:1200px;margin:0 auto}
+.ad-card{background:var(--idt-bg-tint);border:1px solid var(--idt-gray-border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+.ad-input{padding:0.7rem 1rem;border:1px solid var(--idt-gray-border);border-radius:10px;width:100%;box-sizing:border-box;font-family:inherit}
+.ad-btn{padding:0.6rem 1.2rem;border-radius:999px;border:none;background:var(--idt-primary);color:var(--idt-white);font-weight:600;cursor:pointer}
+.ad-btn--accent{background:var(--idt-accent)}
+.ad-table{width:100%;border-collapse:collapse}
+.ad-table th,.ad-table td{padding:0.65rem 0.75rem;border-bottom:1px solid var(--idt-gray-border);text-align:left;font-size:0.9rem}
+.ad-nav{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.ad-nav a{padding:0.5rem 1rem;border-radius:999px;background:var(--idt-gray-light);text-decoration:none;color:var(--idt-text-main);font-weight:600}
+.ad-nav a.active{background:var(--idt-primary);color:var(--idt-white)}

@@ -12,6 +12,12 @@ const ServicesPage = lazy(() => import("./components/services/ServicesPage"));
 const PortfolioPage = lazy(() => import("./components/portfolio/PortfolioPage"));
 const FAQPage = lazy(() => import("./components/faq/FAQPage"));
 const NotFoundPage = lazy(() => import("./components/notfound/NotFoundPage"));
+const StorePage = lazy(() => import("./components/store/StorePage"));
+const ProductPage = lazy(() => import("./components/store/ProductPage"));
+const CartPage = lazy(() => import("./components/store/CartPage"));
+const CheckoutPage = lazy(() => import("./components/store/CheckoutPage"));
+const AdminPage = lazy(() => import("./components/admin/AdminPage"));
+import { CartProvider } from "./components/store/CartContext";
 
 function PageLoader() {
   return (
@@ -57,6 +63,7 @@ function Navbar() {
         <Link to="/about" className={path === "/about" ? "active" : ""}>About</Link>
         <Link to="/services" className={path === "/services" ? "active" : ""}>Services</Link>
         <Link to="/portfolio" className={path === "/portfolio" ? "active" : ""}>Portfolio</Link>
+        <Link to="/store" className={path.startsWith("/store") ? "active" : ""}>Store</Link>
         <Link to="/faq" className={path === "/faq" ? "active" : ""}>FAQ</Link>
         <Link to="/contact" className={path === "/contact" ? "active" : ""}>Contact</Link>
       </div>
@@ -76,8 +83,14 @@ function AppLayout() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/store" element={<StorePage />} />
+          <Route path="/store/:category" element={<StorePage />} />
+          <Route path="/store/product/:slug" element={<ProductPage />} />
+          <Route path="/store/cart" element={<CartPage />} />
+          <Route path="/store/checkout" element={<CheckoutPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin/*" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
@@ -89,7 +102,9 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <AppLayout />
+        <CartProvider>
+          <AppLayout />
+        </CartProvider>
       </BrowserRouter>
     </HelmetProvider>
   );

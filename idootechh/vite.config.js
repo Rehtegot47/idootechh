@@ -15,4 +15,9 @@ export default defineConfig({
       avif: { quality: 70 },
     }),
   ],
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
+  },
 })

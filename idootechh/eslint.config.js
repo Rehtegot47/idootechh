@@ -19,7 +19,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['netlify/functions/**/*.js'],
+    files: ['netlify/functions/**/*.js', 'server/**/*.js'],
     languageOptions: { globals: globals.node },
   },
 ])
