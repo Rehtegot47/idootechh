@@ -1,6 +1,32 @@
 import { Router } from 'express';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { pool } from '../db.js';
 import { authMiddleware, signToken } from '../auth.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const uploadDir = path.join(__dirname, '../../public/store');
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, uploadDir),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const name = file.originalname.replace(ext, '').replace(/[^a-zA-Z0-9]/g, '_');
+    cb(null, `${name}-${Date.now()}${ext}`);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    const allowed = /jpeg|jpg|png|gif|webp/;
+    const ext = allowed.test(path.extname(file.originalname).toLowerCase());
+    const mime = allowed.test(file.mimetype);
+    cb(null, ext && mime);
+  }
+});
 
 const router = Router();
 
@@ -16,6 +42,12 @@ router.post('/login', async (req, res) => {
 
 // Protected routes below
 router.use(authMiddleware);
+
+// Image upload
+router.post('/upload', upload.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded or invalid type' });
+  res.json({ url: `/store/${req.file.filename}` });
+});
 
 router.get('/messages', async (req, res) => {
   const limit = Math.min(parseInt(String(req.query.limit || 50),10)||50,100);

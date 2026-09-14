@@ -41,11 +41,26 @@ function Products(){
   const [products,setProducts]=useState([]);
   const [categories,setCategories]=useState([]);
   const [form,setForm]=useState({category_id:'',slug:'',name:'',description:'',price:'',stock:'',image:''});
+  const [uploading,setUploading]=useState(false);
   const load=()=>{
     api('/api/admin/products').then(r=>r.json()).then(d=>setProducts(d.products||[]));
     api('/api/admin/categories').then(r=>r.json()).then(d=>setCategories(d.categories||[]));
   };
   useEffect(()=>{load();},[]);
+  const handleUpload=async(e)=>{
+    const file=e.target.files[0];
+    if(!file) return;
+    setUploading(true);
+    const fd=new FormData();
+    fd.append('image',file);
+    const token=localStorage.getItem('admin_token');
+    try{
+      const r=await fetch('/api/admin/upload',{method:'POST',headers:{Authorization:`Bearer ${token}`},body:fd});
+      const d=await r.json();
+      if(d.url) setForm(f=>({...f,image:d.url}));
+    }catch(err){console.error(err);}
+    setUploading(false);
+  };
   const submit=async(e)=>{
     e.preventDefault();
     await api('/api/admin/products',{method:'POST',body:JSON.stringify({...form,category_id:Number(form.category_id),price:Number(form.price),stock:Number(form.stock)})});
@@ -64,14 +79,21 @@ function Products(){
         <input className="ad-input" placeholder="Name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/>
         <input className="ad-input" placeholder="Price" type="number" step="0.01" value={form.price} onChange={e=>setForm({...form,price:e.target.value})} required/>
         <input className="ad-input" placeholder="Stock" type="number" value={form.stock} onChange={e=>setForm({...form,stock:e.target.value})} required/>
-        <input className="ad-input" placeholder="Image URL (/store/xxx.jpg)" value={form.image} onChange={e=>setForm({...form,image:e.target.value})}/>
+        <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+          <input className="ad-input" placeholder="Image URL" value={form.image} onChange={e=>setForm({...form,image:e.target.value})} style={{flex:1}}/>
+          <label className="ad-btn" style={{cursor:'pointer',whiteSpace:'nowrap'}}>
+            {uploading ? 'Uploading...' : 'Upload'}
+            <input type="file" accept="image/*" onChange={handleUpload} hidden/>
+          </label>
+        </div>
+        {form.image && <div style={{gridColumn:'1 / -1'}}><img src={form.image} alt="Preview" style={{maxHeight:120,borderRadius:8}}/></div>}
         <textarea className="ad-input" style={{gridColumn:'1 / -1'}} placeholder="Description" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} required rows="3"/>
         <button className="ad-btn ad-btn--accent" style={{gridColumn:'1 / -1'}}>Add product</button>
       </form>
       <div className="ad-card" style={{overflowX:'auto'}}>
         <table className="ad-table">
-          <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
-          <tbody>{products.map(p=><tr key={p.id}><td>{p.name}</td><td>{p.category_name}</td><td>₦{Number(p.price).toLocaleString()}</td><td>{p.stock}</td><td><button className="ad-btn" onClick={()=>del(p.id)}>Delete</button></td></tr>)}</tbody>
+          <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+          <tbody>{products.map(p=><tr key={p.id}><td>{p.image && <img src={p.image} alt="" style={{width:40,height:40,objectFit:'cover',borderRadius:4}}/>}</td><td>{p.name}</td><td>{p.category_name}</td><td>₦{Number(p.price).toLocaleString()}</td><td>{p.stock}</td><td><button className="ad-btn" onClick={()=>del(p.id)}>Delete</button></td></tr>)}</tbody>
         </table>
       </div>
     </div>
