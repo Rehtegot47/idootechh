@@ -19,6 +19,7 @@ if (process.env.DB_DRIVER === 'sqlite') {
       email TEXT NOT NULL,
       subject TEXT NOT NULL,
       message TEXT NOT NULL,
+      is_read INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
     CREATE TABLE IF NOT EXISTS categories (

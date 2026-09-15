@@ -45,25 +45,103 @@ router.post('/login', async (req, res) => {
 // Protected routes below
 router.use(authMiddleware);
 
-// Image upload
+// Upload
 router.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded or invalid type' });
   res.json({ url: `/store/${req.file.filename}` });
 });
 
-router.get('/messages', async (req, res) => {
-  const limit = Math.min(parseInt(String(req.query.limit || 50),10)||50,100);
-  const [rows] = await pool.query('SELECT * FROM messages ORDER BY created_at DESC LIMIT ?', [limit]);
-  res.json({ messages: rows });
+// Dashboard stats
+router.get('/stats', async (_req, res) => {
+  try {
+    const [[{ productCount }]] = await pool.query('SELECT COUNT(*) as productCount FROM products');
+    const [[{ categoryCount }]] = await pool.query('SELECT COUNT(*) as categoryCount FROM categories');
+    const [[{ orderCount }]] = await pool.query('SELECT COUNT(*) as orderCount FROM orders');
+    const [[{ totalRevenue }]] = await pool.query("SELECT COALESCE(SUM(total),0) as totalRevenue FROM orders WHERE status IN ('paid','shipped','delivered')");
+    const [[{ pendingOrders }]] = await pool.query("SELECT COUNT(*) as pendingOrders FROM orders WHERE status='pending'");
+    const [[{ messageCount }]] = await pool.query('SELECT COUNT(*) as messageCount FROM messages');
+    const [[{ unreadMessages }]] = await pool.query('SELECT COUNT(*) as unreadMessages FROM messages WHERE is_read=0');
+    res.json({ productCount, categoryCount, orderCount, totalRevenue, pendingOrders, messageCount, unreadMessages });
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+// ─── PRODUCTS ───
+router.get('/products', async (_req, res) => {
+  const [rows] = await pool.query('SELECT p.*, c.name as category_name FROM products p JOIN categories c ON c.id=p.category_id ORDER BY p.created_at DESC');
+  res.json({ products: rows });
+});
+
+router.get('/products/:id', async (req, res) => {
+  const [rows] = await pool.query('SELECT p.*, c.name as category_name FROM products p JOIN categories c ON c.id=p.category_id WHERE p.id=?', [req.params.id]);
+  if (!rows.length) return res.status(404).json({ error: 'Not found' });
+  res.json({ product: rows[0] });
+});
+
+router.post('/products', async (req, res) => {
+  const { category_id, slug, name, description, price, stock, image, video_url } = req.body;
+  try {
+    const [r] = await pool.query('INSERT INTO products (category_id,slug,name,description,price,stock,image,video_url) VALUES (?,?,?,?,?,?,?,?)', [category_id, slug, name, description, price, stock || 0, image || null, video_url || null]);
+    res.json({ id: r.insertId });
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+router.put('/products/:id', async (req, res) => {
+  const { category_id, slug, name, description, price, stock, image, video_url } = req.body;
+  try {
+    await pool.query('UPDATE products SET category_id=?,slug=?,name=?,description=?,price=?,stock=?,image=?,video_url=? WHERE id=?', [category_id, slug, name, description, price, stock, image, video_url, req.params.id]);
+    res.json({ ok: true });
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+router.delete('/products/:id', async (req, res) => {
+  await pool.query('DELETE FROM products WHERE id=?', [req.params.id]);
+  res.json({ ok: true });
+});
+
+// ─── CATEGORIES ───
+router.get('/categories', async (_req, res) => {
+  const [rows] = await pool.query('SELECT c.*, (SELECT COUNT(*) FROM products WHERE category_id=c.id) as product_count FROM categories c ORDER BY c.name');
+  res.json({ categories: rows });
+});
+
+router.post('/categories', async (req, res) => {
+  const { slug, name, description } = req.body;
+  try {
+    const [r] = await pool.query('INSERT INTO categories (slug,name,description) VALUES (?,?,?)', [slug, name, description || null]);
+    res.json({ id: r.insertId });
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+router.put('/categories/:id', async (req, res) => {
+  const { slug, name, description } = req.body;
+  try {
+    await pool.query('UPDATE categories SET slug=?,name=?,description=? WHERE id=?', [slug, name, description || null, req.params.id]);
+    res.json({ ok: true });
+  } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+router.delete('/categories/:id', async (req, res) => {
+  const [[{ cnt }]] = await pool.query('SELECT COUNT(*) as cnt FROM products WHERE category_id=?', [req.params.id]);
+  if (cnt > 0) return res.status(400).json({ error: `Cannot delete: ${cnt} products still use this category` });
+  await pool.query('DELETE FROM categories WHERE id=?', [req.params.id]);
+  res.json({ ok: true });
+});
+
+// ─── ORDERS ───
 router.get('/orders', async (_req, res) => {
   const [orders] = await pool.query('SELECT * FROM orders ORDER BY created_at DESC');
   for (const o of orders) {
-    const [items] = await pool.query('SELECT oi.*, p.name FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=?', [o.id]);
+    const [items] = await pool.query('SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=?', [o.id]);
     o.items = items;
   }
   res.json({ orders });
+});
+
+router.get('/orders/:id', async (req, res) => {
+  const [rows] = await pool.query('SELECT * FROM orders WHERE id=?', [req.params.id]);
+  if (!rows.length) return res.status(404).json({ error: 'Not found' });
+  const [items] = await pool.query('SELECT oi.*, p.name, p.image, p.slug FROM order_items oi JOIN products p ON p.id=oi.product_id WHERE oi.order_id=?', [req.params.id]);
+  res.json({ order: { ...rows[0], items } });
 });
 
 router.patch('/orders/:id', async (req, res) => {
@@ -72,37 +150,32 @@ router.patch('/orders/:id', async (req, res) => {
   res.json({ ok: true });
 });
 
-router.post('/products', async (req, res) => {
-  const { category_id, slug, name, description, price, stock, image } = req.body;
-  const [r] = await pool.query('INSERT INTO products (category_id,slug,name,description,price,stock,image) VALUES (?,?,?,?,?,?,?)', [category_id,slug,name,description,price,stock||0,image||null]);
-  res.json({ id: r.insertId });
-});
-
-router.put('/products/:id', async (req, res) => {
-  const { category_id, slug, name, description, price, stock, image } = req.body;
-  await pool.query('UPDATE products SET category_id=?,slug=?,name=?,description=?,price=?,stock=?,image=? WHERE id=?', [category_id,slug,name,description,price,stock,image,req.params.id]);
+router.delete('/orders/:id', async (req, res) => {
+  await pool.query('DELETE FROM order_items WHERE order_id=?', [req.params.id]);
+  await pool.query('DELETE FROM orders WHERE id=?', [req.params.id]);
   res.json({ ok: true });
 });
 
-router.delete('/products/:id', async (req, res) => {
-  await pool.query('DELETE FROM products WHERE id=?', [req.params.id]);
+// ─── MESSAGES ───
+router.get('/messages', async (req, res) => {
+  const limit = Math.min(parseInt(String(req.query.limit || 50), 10) || 50, 100);
+  const [rows] = await pool.query('SELECT * FROM messages ORDER BY created_at DESC LIMIT ?', [limit]);
+  res.json({ messages: rows });
+});
+
+router.patch('/messages/:id/read', async (req, res) => {
+  await pool.query('UPDATE messages SET is_read=1 WHERE id=?', [req.params.id]);
   res.json({ ok: true });
 });
 
-router.get('/products', async (_req, res) => {
-  const [rows] = await pool.query('SELECT p.*, c.name as category_name FROM products p JOIN categories c ON c.id=p.category_id ORDER BY p.created_at DESC');
-  res.json({ products: rows });
+router.patch('/messages/:id/unread', async (req, res) => {
+  await pool.query('UPDATE messages SET is_read=0 WHERE id=?', [req.params.id]);
+  res.json({ ok: true });
 });
 
-router.post('/categories', async (req, res) => {
-  const { slug, name, description } = req.body;
-  const [r] = await pool.query('INSERT INTO categories (slug,name,description) VALUES (?,?,?)', [slug,name,description||null]);
-  res.json({ id: r.insertId });
-});
-
-router.get('/categories', async (_req, res) => {
-  const [rows] = await pool.query('SELECT * FROM categories ORDER BY name');
-  res.json({ categories: rows });
+router.delete('/messages/:id', async (req, res) => {
+  await pool.query('DELETE FROM messages WHERE id=?', [req.params.id]);
+  res.json({ ok: true });
 });
 
 export default router;
