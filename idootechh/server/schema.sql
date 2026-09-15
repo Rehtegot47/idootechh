@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS products (
   price DECIMAL(12,2) NOT NULL,
   stock INT NOT NULL DEFAULT 0,
   image VARCHAR(500),
+  video_url VARCHAR(500),
   images JSON,
   featured TINYINT(1) DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

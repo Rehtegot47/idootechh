@@ -36,6 +36,8 @@ if (process.env.DB_DRIVER === 'sqlite') {
       price REAL NOT NULL,
       stock INTEGER DEFAULT 0,
       image TEXT,
+      video_url TEXT,
+      featured INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (category_id) REFERENCES categories(id)
     );
