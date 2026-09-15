@@ -38,7 +38,13 @@ export default function StorePage(){
           <div className="st-grid">
             {products.map(p=> (
               <div key={p.id} className="st-card">
-                <div className="st-card__media"><img src={p.image || '/idoo1.jpg'} alt={p.name}/></div>
+                <div className="st-card__media">
+                  {p.image && /\.(mp4|webm|ogg)$/i.test(p.image) ? (
+                    <video src={p.image} muted style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+                  ) : (
+                    <img src={p.image || '/idoo1.jpg'} alt={p.name}/>
+                  )}
+                </div>
                 <div className="st-card__body">
                   <span className="st-card__cat">{p.category_name}</span>
                   <h3 className="st-card__title">{p.name}</h3>

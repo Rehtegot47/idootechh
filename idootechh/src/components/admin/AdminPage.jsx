@@ -40,8 +40,9 @@ function api(path, opts={}){
 function Products(){
   const [products,setProducts]=useState([]);
   const [categories,setCategories]=useState([]);
-  const [form,setForm]=useState({category_id:'',slug:'',name:'',description:'',price:'',stock:'',image:''});
+  const [form,setForm]=useState({category_id:'',slug:'',name:'',description:'',price:'',stock:'',image:'',video_url:''});
   const [uploading,setUploading]=useState(false);
+  const [mediaType,setMediaType]=useState('image');
   const load=()=>{
     api('/api/admin/products').then(r=>r.json()).then(d=>setProducts(d.products||[]));
     api('/api/admin/categories').then(r=>r.json()).then(d=>setCategories(d.categories||[]));
@@ -61,13 +62,19 @@ function Products(){
     }catch(err){console.error(err);}
     setUploading(false);
   };
+  const getYouTubeEmbed=(url)=>{
+    if(!url) return null;
+    const match=url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : null;
+  };
   const submit=async(e)=>{
     e.preventDefault();
     await api('/api/admin/products',{method:'POST',body:JSON.stringify({...form,category_id:Number(form.category_id),price:Number(form.price),stock:Number(form.stock)})});
-    setForm({category_id:'',slug:'',name:'',description:'',price:'',stock:'',image:''});
+    setForm({category_id:'',slug:'',name:'',description:'',price:'',stock:'',image:'',video_url:''});
     load();
   };
   const del=async(id)=>{ await api('/api/admin/products/'+id,{method:'DELETE'}); load(); };
+  const youtubeId = getYouTubeEmbed(form.video_url);
   return (
     <div>
       <h2>Products</h2>
@@ -79,14 +86,52 @@ function Products(){
         <input className="ad-input" placeholder="Name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/>
         <input className="ad-input" placeholder="Price" type="number" step="0.01" value={form.price} onChange={e=>setForm({...form,price:e.target.value})} required/>
         <input className="ad-input" placeholder="Stock" type="number" value={form.stock} onChange={e=>setForm({...form,stock:e.target.value})} required/>
-        <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
-          <input className="ad-input" placeholder="Image URL" value={form.image} onChange={e=>setForm({...form,image:e.target.value})} style={{flex:1}}/>
-          <label className="ad-btn" style={{cursor:'pointer',whiteSpace:'nowrap'}}>
-            {uploading ? 'Uploading...' : 'Upload'}
-            <input type="file" accept="image/*" onChange={handleUpload} hidden/>
-          </label>
+
+        <div style={{gridColumn:'1 / -1'}}>
+          <label style={{fontSize:'0.85rem',fontWeight:600,color:'var(--idt-text-muted)',marginBottom:'0.35rem',display:'block'}}>Media</label>
+          <div style={{display:'flex',gap:'0.5rem',marginBottom:'0.5rem'}}>
+            <button type="button" className={`ad-btn ${mediaType==='image'?'ad-btn--accent':''}`} onClick={()=>setMediaType('image')}>Image</button>
+            <button type="button" className={`ad-btn ${mediaType==='video'?'ad-btn--accent':''}`} onClick={()=>setMediaType('video')}>Video File</button>
+            <button type="button" className={`ad-btn ${mediaType==='youtube'?'ad-btn--accent':''}`} onClick={()=>setMediaType('youtube')}>YouTube URL</button>
+          </div>
+
+          {mediaType==='image' && (
+            <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+              <input className="ad-input" placeholder="Image URL" value={form.image} onChange={e=>setForm({...form,image:e.target.value})} style={{flex:1}}/>
+              <label className="ad-btn" style={{cursor:'pointer',whiteSpace:'nowrap'}}>
+                {uploading ? 'Uploading...' : 'Upload'}
+                <input type="file" accept="image/*" onChange={handleUpload} hidden/>
+              </label>
+            </div>
+          )}
+
+          {mediaType==='video' && (
+            <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+              <input className="ad-input" placeholder="Video URL" value={form.image} onChange={e=>setForm({...form,image:e.target.value})} style={{flex:1}}/>
+              <label className="ad-btn" style={{cursor:'pointer',whiteSpace:'nowrap'}}>
+                {uploading ? 'Uploading...' : 'Upload Video'}
+                <input type="file" accept="video/*" onChange={handleUpload} hidden/>
+              </label>
+            </div>
+          )}
+
+          {mediaType==='youtube' && (
+            <input className="ad-input" placeholder="https://youtube.com/watch?v=..." value={form.video_url} onChange={e=>setForm({...form,video_url:e.target.value})}/>
+          )}
         </div>
-        {form.image && <div style={{gridColumn:'1 / -1'}}><img src={form.image} alt="Preview" style={{maxHeight:120,borderRadius:8}}/></div>}
+
+        {(form.image || youtubeId) && (
+          <div style={{gridColumn:'1 / -1'}}>
+            {mediaType==='youtube' && youtubeId ? (
+              <iframe width="100%" height="200" src={`https://www.youtube.com/embed/${youtubeId}`} style={{borderRadius:8,border:'none'}} allowFullScreen title="YouTube preview"/>
+            ) : form.image && form.image.match(/\.(mp4|webm|ogg)$/i) ? (
+              <video src={form.image} controls style={{maxHeight:150,borderRadius:8}}/>
+            ) : form.image ? (
+              <img src={form.image} alt="Preview" style={{maxHeight:120,borderRadius:8}}/>
+            ) : null}
+          </div>
+        )}
+
         <textarea className="ad-input" style={{gridColumn:'1 / -1'}} placeholder="Description" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} required rows="3"/>
         <button className="ad-btn ad-btn--accent" style={{gridColumn:'1 / -1'}}>Add product</button>
       </form>
