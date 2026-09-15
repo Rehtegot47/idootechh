@@ -46,6 +46,7 @@ if (process.env.DB_DRIVER === 'sqlite') {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       customer_name TEXT NOT NULL,
       customer_email TEXT NOT NULL,
+      customer_phone TEXT,
       shipping_address TEXT NOT NULL,
       total REAL NOT NULL,
       status TEXT DEFAULT 'pending',

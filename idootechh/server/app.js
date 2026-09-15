@@ -32,7 +32,7 @@ app.use('/api/categories', categoriesRoute);
 app.use('/api/orders', ordersRoute);
 app.use('/api/admin', adminRoute);
 
-app.use((err, _req, res) => {
+app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: 'Internal error' });
 });
