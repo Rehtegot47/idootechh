@@ -43,6 +43,9 @@ CREATE TABLE IF NOT EXISTS orders (
   customer_email VARCHAR(255) NOT NULL,
   customer_phone VARCHAR(50),
   shipping_address TEXT NOT NULL,
+  shipping_state VARCHAR(100) DEFAULT '',
+  shipping_fee DECIMAL(12,2) DEFAULT 0,
+  subtotal DECIMAL(12,2) DEFAULT 0,
   total DECIMAL(12,2) NOT NULL,
   status ENUM('pending','paid','shipped','delivered','cancelled') DEFAULT 'pending',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

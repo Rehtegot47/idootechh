@@ -48,6 +48,9 @@ if (process.env.DB_DRIVER === 'sqlite') {
       customer_email TEXT NOT NULL,
       customer_phone TEXT,
       shipping_address TEXT NOT NULL,
+      shipping_state TEXT DEFAULT '',
+      shipping_fee REAL DEFAULT 0,
+      subtotal REAL DEFAULT 0,
       total REAL NOT NULL,
       status TEXT DEFAULT 'pending',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
